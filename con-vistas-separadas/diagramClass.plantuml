@@ -1,0 +1,64 @@
+@startuml
+Mastermind ..> YesNoDialogView
+Mastermind ..> GameView
+Mastermind : + init()
+
+YesNoDialogView : - question
+YesNoDialogView : - answer
+YesNoDialogView : + read()
+YesNoDialogView : + isAffirmative()
+YesNoDialogView : + isNegative()
+
+GameView *--> Game
+GameView : + play()
+GameView ..> ProposalCombinationView
+GameView ..> ResultView
+
+Game *--> SecretCombination
+Game o--> "0..10" ProposalCombination
+Game o--> "0..10" Result
+Game : + addProposalCombination(proposalCombination)
+Game : + getAttempts()
+Game : + isEndGame()
+Game : + isWinner()
+Game : + isLoser()
+Game : + getProposalCombination(index)
+Game : + getResult(index)
+
+ProposalCombinationView ..> ProposalCombination
+ProposalCombinationView : + read()
+
+ResultView : + show(game)
+
+SecretCombination *--> Combination
+
+ProposalCombination *--> Combination
+
+Result : - blacks
+Result : - whites
+Result : + getBlacks()
+Result : + getWhites()
+
+Combination *--> "1..n" Colors
+Combination : + String COLORS
+Combination : - COMBINATION_LENGTH
+Combination : + length()
+Combination : + getColor(index)
+Combination : + getColors()
+Combination : + contains(color, index)
+Combination : + hasValidLength()
+Combination : + hasValidColors()
+Combination : + hasRepeatedColors()
+Combination : + setColors(colors)
+Combination : + addColor(color)
+
+enum Colors {
+  RED
+  BLUE
+  YELLOW
+  GREEN
+  CYAN
+  MAGENTA
+}
+
+@enduml
